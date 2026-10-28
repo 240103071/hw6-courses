@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,12 +39,31 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoursesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TopicCard(
-                        topic = DataSource.topics[0],
-                        modifier = Modifier.padding(innerPadding)
+                    TopicGrid(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(
+                                start = dimensionResource(R.dimen.padding_small),
+                                top = dimensionResource(R.dimen.padding_small),
+                                end = dimensionResource(R.dimen.padding_small)
+                            )
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TopicGrid(modifier: Modifier = Modifier) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
+        modifier = modifier
+    ) {
+        items(DataSource.topics) { topic ->
+            TopicCard(topic)
         }
     }
 }
@@ -97,5 +119,13 @@ fun TopicCardPreview() {
         ) {
             TopicCard(topic = Topic(R.string.photography, 321, R.drawable.photography))
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TopicGridPreview() {
+    CoursesTheme {
+        TopicGrid()
     }
 }
