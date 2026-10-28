@@ -39,15 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoursesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TopicGrid(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .padding(
-                                start = dimensionResource(R.dimen.padding_small),
-                                top = dimensionResource(R.dimen.padding_small),
-                                end = dimensionResource(R.dimen.padding_small)
-                            )
-                    )
+                    TopicGrid(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -60,7 +52,11 @@ fun TopicGrid(modifier: Modifier = Modifier) {
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
         horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
-        modifier = modifier
+        modifier = modifier.padding(
+            start = dimensionResource(R.dimen.padding_small),
+            top = dimensionResource(R.dimen.padding_small),
+            end = dimensionResource(R.dimen.padding_small)
+        )
     ) {
         items(DataSource.topics) { topic ->
             TopicCard(topic)
